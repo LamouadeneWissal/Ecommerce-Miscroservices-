@@ -1,5 +1,6 @@
 package org.sid.stockservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.sid.stockservice.entity.StockMarket;
 import org.sid.stockservice.feign.CompanyFeignClient;
 import org.sid.stockservice.repository.StockMarketRepository;
@@ -9,20 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class StockMarketServiceImpl implements StockMarketService {
     private final StockMarketRepository repository;
     private final CompanyFeignClient companyFeignClient;
-
-    public StockMarketServiceImpl(StockMarketRepository repository, CompanyFeignClient companyFeignClient) {
-        this.repository = repository;
-        this.companyFeignClient = companyFeignClient;
-    }
 
     @Override
     public StockMarket addStock(StockMarket stock) {
         StockMarket saved = repository.save(stock);
         List<StockMarket> latest = repository.findByCompanyIdOrderByDateDesc(saved.getCompanyId());
-        if(!latest.isEmpty() && latest.get(0).getId().equals(saved.getId())) {
+        if (!latest.isEmpty() && latest.get(0).getId().equals(saved.getId())) {
             companyFeignClient.updateCompanyPrice(saved.getCompanyId(), new CompanyFeignClient.UpdatePrice(saved.getCloseValue()));
         }
         return saved;

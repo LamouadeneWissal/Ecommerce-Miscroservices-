@@ -1,5 +1,7 @@
 package org.sid.stockservice.controller;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.sid.stockservice.dto.StockRequest;
 import org.sid.stockservice.entity.StockMarket;
 import org.sid.stockservice.service.StockMarketService;
@@ -11,24 +13,21 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/stocks")
+@RequiredArgsConstructor
 public class StockMarketController {
     private final StockMarketService service;
 
-    public StockMarketController(StockMarketService service) {
-        this.service = service;
-    }
-
     @PostMapping
-    public ResponseEntity<StockMarket> create(@RequestBody StockRequest request) {
-        StockMarket stock = new StockMarket(
-                request.getDate()!=null?request.getDate(): LocalDateTime.now(),
-                request.getOpenValue(),
-                request.getHighValue(),
-                request.getLowValue(),
-                request.getCloseValue(),
-                request.getVolume(),
-                request.getCompanyId()
-        );
+    public ResponseEntity<StockMarket> create(@Valid @RequestBody StockRequest request) {
+        StockMarket stock = StockMarket.builder()
+                .date(request.getDate() != null ? request.getDate() : LocalDateTime.now())
+                .openValue(request.getOpenValue())
+                .highValue(request.getHighValue())
+                .lowValue(request.getLowValue())
+                .closeValue(request.getCloseValue())
+                .volume(request.getVolume())
+                .companyId(request.getCompanyId())
+                .build();
         return ResponseEntity.ok(service.addStock(stock));
     }
 

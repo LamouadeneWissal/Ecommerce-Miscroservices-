@@ -1,5 +1,6 @@
 package org.sid.companyservice.service;
 
+import lombok.RequiredArgsConstructor;
 import org.sid.companyservice.entity.Company;
 import org.sid.companyservice.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
@@ -9,16 +10,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyRepository companyRepository;
 
-    public CompanyServiceImpl(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-    }
-
     @Override
     public Company createCompany(String name, LocalDate ipoDate, Double initialPrice, String domain) {
-        Company c = new Company(name, ipoDate, initialPrice, domain);
+        Company c = Company.builder()
+                .name(name)
+                .ipoDate(ipoDate)
+                .currentPrice(initialPrice)
+                .domain(domain)
+                .build();
         return companyRepository.save(c);
     }
 

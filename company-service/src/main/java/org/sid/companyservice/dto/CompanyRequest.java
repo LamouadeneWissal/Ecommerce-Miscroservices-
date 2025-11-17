@@ -1,21 +1,27 @@
 package org.sid.companyservice.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class CompanyRequest {
+    @NotBlank
     private String name;
+    @NotNull
     private LocalDate ipoDate;
+    @NotNull
+    @Positive
     private Double initialPrice;
+    @NotBlank
     private String domain;
-
-    public CompanyRequest() {}
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
-    public LocalDate getIpoDate() { return ipoDate; }
-    public void setIpoDate(LocalDate ipoDate) { this.ipoDate = ipoDate; }
-    public Double getInitialPrice() { return initialPrice; }
-    public void setInitialPrice(Double initialPrice) { this.initialPrice = initialPrice; }
-    public String getDomain() { return domain; }
-    public void setDomain(String domain) { this.domain = domain; }
 }

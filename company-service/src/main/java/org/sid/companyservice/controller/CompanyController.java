@@ -1,5 +1,7 @@
 package org.sid.companyservice.controller;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.sid.companyservice.dto.CompanyRequest;
 import org.sid.companyservice.dto.UpdatePriceRequest;
 import org.sid.companyservice.entity.Company;
@@ -11,15 +13,12 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/companies")
+@RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService companyService;
 
-    public CompanyController(CompanyService companyService) {
-        this.companyService = companyService;
-    }
-
     @PostMapping
-    public ResponseEntity<Company> create(@RequestBody CompanyRequest request) {
+    public ResponseEntity<Company> create(@Valid @RequestBody CompanyRequest request) {
         Company c = companyService.createCompany(request.getName(), request.getIpoDate(), request.getInitialPrice(), request.getDomain());
         return ResponseEntity.ok(c);
     }
@@ -31,7 +30,7 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}/price")
-    public ResponseEntity<Company> updatePrice(@PathVariable Long id, @RequestBody UpdatePriceRequest req) {
+    public ResponseEntity<Company> updatePrice(@PathVariable Long id, @Valid @RequestBody UpdatePriceRequest req) {
         Company c = companyService.updatePrice(id, req.getPrice());
         return ResponseEntity.ok(c);
     }
