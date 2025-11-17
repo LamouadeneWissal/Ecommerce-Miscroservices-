@@ -10,3 +10,7 @@ spring:
           uri: lb://stock-service
           predicates:
             - Path=/stocks/**
+        - id: ai-agent-service
+          uri: lb://ai-agent-service
+          predicates:
+            - Path=/bot/**
