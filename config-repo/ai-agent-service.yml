@@ -9,5 +9,5 @@ openai:
   model: ${OPENAI_MODEL:gpt-4o-mini}
 telegram:
   bot:
-    username: ${TELEGRAM_BOT_USERNAME:ai_agent_bot}
+    username: ${TELEGRAM_BOT_USERNAME:StockMarketAgentBot}
     token: ${TELEGRAM_BOT_TOKEN:}
