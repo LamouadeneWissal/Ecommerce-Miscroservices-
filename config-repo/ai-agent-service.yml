@@ -7,6 +7,8 @@ eureka:
   client:
     webclient:
       enabled: true
+    register-with-eureka: false
+    fetch-registry: true
 openai:
   api:
     key: ${OPENAI_API_KEY:}
