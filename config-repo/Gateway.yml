@@ -1,0 +1,27 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: Gateway
+  cloud:
+    discovery:
+      enabled: true
+    gateway:
+      routes:
+        - id: company-service
+          uri: lb://company-service
+          predicates:
+            - Path=/companies/**
+        - id: stock-service
+          uri: lb://stock-service
+          predicates:
+            - Path=/stocks/**
+        - id: ai-agent-service
+          uri: lb://ai-agent-service
+          predicates:
+            - Path=/bot/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
