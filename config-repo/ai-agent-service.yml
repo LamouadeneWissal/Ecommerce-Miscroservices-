@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: ai-agent-service
+eureka:
+  client:
+    webclient:
+      enabled: true
 openai:
   api:
     key: ${OPENAI_API_KEY:}
