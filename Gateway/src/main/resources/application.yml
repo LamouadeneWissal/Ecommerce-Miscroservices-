@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: company-service
+          uri: lb://company-service
+          predicates:
+            - Path=/companies/**
+        - id: stock-service
+          uri: lb://stock-service
+          predicates:
+            - Path=/stocks/**
